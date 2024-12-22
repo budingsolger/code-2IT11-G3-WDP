@@ -1,0 +1,958 @@
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>HOME PAGE</title>
+            <style>
+                * {
+                   margin: 0;
+                   padding: 0;
+                   box-sizing: border-box;
+                    }
+
+                    .header {
+        background-color: black ;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: 30px 0;
+        width: 100%;
+    }
+            
+                .header {
+                    display: flex;
+                    flex-direction: column; /* Keep the header items stacked */
+                    align-items: center;
+                     padding: 25px;
+                    background-color: black;
+                     width: 100%; /* Ensure the header takes full width */
+                           }
+               
+                .header-container {
+                     display: flex;
+                     width: 100%;
+                     align-items: center;
+                    justify-content: center; /* Center the nav items */
+                     position: relative;
+                           }
+
+                           
+               .logo {
+                   flex-shrink: 0;
+                   position: absolute; /* Keep the logo fixed to the left */
+                   left: 20px;
+               }
+               
+               .logo img {
+                   height: 110px;
+                   width: 120px;
+                   transition: transform 0.3s ease;
+               }
+               
+               .logo img:hover {
+                   transform: scale(1.05);
+               }
+           
+               .search-container {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               width: 100%;
+               padding: 10px; /* Add some padding around the container for better spacing */
+               box-sizing: border-box; /* Ensures that padding is included in the width calculation */
+               margin-left: 230px;
+           }
+           
+           .search-bar {
+               width: 80%; /* Set width to 80% to allow flexibility on small screens */
+               max-width: 600px; /* Limit the max width */
+               padding: 10px;
+               border: 2px solid #007bff;
+               border-radius: 25px;
+               font-size: 16px;
+               box-sizing: border-box; /* Ensures padding doesn't increase the element's width */
+           }
+           
+           .search-button {
+               background-color: #007bff;
+               color: white;
+               border: none;
+               padding: 10px 20px;
+               margin-left: 10px;
+               border-radius: 25px;
+               cursor: pointer;
+               transition: background-color 0.3s ease;
+           }
+           
+           .search-button:hover {
+               background-color: #0056b3;
+           }
+           
+           /* Responsive adjustments */
+           @media (max-width: 1024px) {
+               .search-container {
+                   padding: 5px; /* Reduce padding on smaller screens */
+               }
+           
+               .search-bar {
+                   width: 70%; /* Reduce width a bit on tablets */
+               }
+           
+               .search-button {
+                   padding: 8px 18px; /* Adjust button padding for smaller screens */
+               }
+           }
+           
+           @media (max-width: 768px) {
+               .search-container {
+                   flex-direction: column; /* Stack the search bar and button vertically */
+                   align-items: center; /* Center align vertically stacked items */
+               }
+           
+               .search-bar {
+                   width: 50%; /* Make the search bar wider on mobile */
+                   margin-bottom: 10px; /* Add spacing between the search bar and button */
+               }
+           
+               .search-button {
+                   width: 30%; /* Make the search button match the width of the search bar */
+               }
+           }
+           
+           @media (max-width: 480px) {
+               .search-bar {
+                   font-size: 14px; /* Reduce font size for very small screens */
+                   padding: 8px; /* Reduce padding */
+               }
+           
+               .search-button {
+                   font-size: 14px; /* Adjust button font size */
+               }
+           }
+           
+           
+               .nav {
+                   display: flex;
+                   gap: 40px;
+                   /* This ensures nav is centered */
+                   flex-grow: 1; /* Allows the nav to take up remaining space */
+                   
+               }
+           
+           
+               .nav-link {
+                   text-decoration: none;
+                   color:white;
+                   font-size: 16px;
+                   font-weight: 500;
+                   padding: 8px 0;
+                   position: relative;
+                   transition: color 0.3s ease;
+                   font-family: Arial, sans-serif;
+               }
+               
+               .nav-link::after {
+                   content: '';
+                   position: absolute;
+                   bottom: 0;
+                   left: 0;
+                   width: 0;
+                   height: 2px;
+                   background-color: #007bff;
+                   transition: width 0.3s ease;
+               }
+               
+               .nav-link:hover {
+                   color: #007bff;
+               }
+               
+               .nav-link:hover::after {
+                   width: 100%;
+               }
+               
+               /* Mobile menu button */
+               .mobile-menu-btn {
+                   display: none;
+                   cursor: pointer;
+                   padding: 10px;
+               }
+               
+               .mobile-menu-btn span {
+                   display: block;
+                   width: 25px;
+                   height: 2px;
+                   background-color: #2c3e50;
+                   margin: 5px 0;
+                   transition: all 0.3s ease;
+               }
+               
+               @media (max-width: 768px) {
+    .nav {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: black;
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateX(100%); /* Initially off-screen to the right */
+        opacity: 0;  /* Initially hidden */
+        visibility: hidden;  /* Ensure it's not clickable */
+        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s 0.3s;
+        z-index: 1001; /* Ensure it's above other content */
+    }
+
+    .nav.active {
+        transform: translateX(0);  /* Move the nav into view */
+        opacity: 1;
+        visibility: visible;  /* Make it clickable */
+        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0s;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        z-index: 1002; /* Ensure the mobile button is above other elements */
+    }
+
+    /* When menu is open */
+    .mobile-menu-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+}
+
+
+
+           
+               .main-content {
+                               display: flex; /* Use flexbox for the main content */
+                               flex-grow: 1; /* Allow it to grow and fill the remaining space */
+                               align-items: flex-start; /* Align items to the start */
+                               padding: 0; /* Remove padding */
+                               margin: 0; /* Remove margin */
+                           }
+           
+                           .gif-container {
+                               position: relative;
+                               width: 100%;
+                               height: 70vh; /* Set height to 70% of the viewport height */
+                               overflow: hidden; /* Hide any overflow */
+                           }
+           
+                           .gif-container .slide {
+                               position: absolute;
+                               width: 100%;
+                               height: 100%; /* Keep height at 100% of the container */
+                               object-fit: cover; /* Make the image cover the entire container */
+                               opacity: 0; /* Start with all images hidden */
+                               transition: opacity 0.5s ease; /* Smooth transition for opacity */
+                           }
+           
+                           .gif-container .slide.active {
+                               opacity: 1; /* Show the active image */
+                           }
+           
+                           .prev-button, .next-button {
+                               position: absolute;
+                               top: 50%;
+                               transform: translateY(-50%);
+                               background-color: black;
+                               color: white;
+                               border: none;
+                               padding: 10px;
+                               cursor: pointer;
+                               border-radius: 50%; /* Make the buttons circular */
+                               width: 50px; /* Set a fixed width */
+                               height: 50px; /* Set a fixed height */
+                               font-size: 24px; /* Increase font size for better visibility */
+                               transition: background-color 0.3s ease;
+                           }
+           
+                           .prev-button {
+                               left: 20px; /* Position to the left */
+                           }
+           
+                           .next-button {
+                               right: 20px; /* Position to the right */
+                           }
+           
+                           .prev-button:hover, .next-button:hover {
+                               background-color: rgba(0, 123, 255, 1); /* Darken on hover */
+                           }
+           
+                           .slide-text {
+                               text-align: center; /* Center the text */
+                               color: white; /* Change text color */
+                               background-color: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background */
+                               padding: 10px; /* Add some padding */
+                               border-radius: 5px; /* Optional: Round the corners */
+                           }
+           
+                           .gif-text h1 {
+                               animation: slowPulse 4s infinite;
+                           }
+                           
+                       /* Make sure the welcome section is visible */
+                       .welcome-section {
+                               text-align: center;     
+                               color: black;
+                               padding: 20px;
+                               background-color: white; /* Ensure background color to make it visible */
+                           }
+           
+                           .welcome-section h1 {
+                               font-size: 50px;
+                               font-weight: bold;
+                               text-align: center;
+                           }
+                           .welcome-section h2 {
+                               font-size: 25px;
+                               font-weight: bold;
+                               text-align: center;
+                               margin-top: 10px;
+                           }
+           
+                           .welcome-section p {
+                               font-size: 21px;
+                               margin-top: 10px;
+                               
+                           }
+                           p {
+                           text-indent: 0; /* Remove indentation at the start of the paragraph */
+                           margin: 0; /* Remove any default margin */
+                           padding: 0; /* Remove any default padding */
+                       }
+           
+                           .explore-button {
+                               background-color: #007bff;
+                               color: white;
+                               font-size: 18px;
+                               padding: 10px 20px;
+                               border: none;
+                               border-radius: 5px;
+                               cursor: pointer;
+                               margin-top: 20px;
+                               transition: background-color 0.3s ease;
+                           }
+                           .text-container {
+                               width: 80%; /* Set the width of the container (adjust as needed) */
+                               max-width: 1100px; /* Set a maximum width to prevent the text from becoming too wide */
+                               margin: 0 auto; /* Center the container horizontally */
+                               padding: 20px; /* Optional: add some padding inside the container */
+                               text-align: justify; /* Optionally, you can justify the text for a cleaner look */
+                               border: 3px   
+                               
+                           }
+           
+                           .explore-button:hover {
+                               background-color: #0056b3;
+                           }
+           
+                           .best-sellers-section {
+                           width: 90%;
+                           max-width: 2500px;
+                           margin: 50px auto;
+                           text-align: center;
+                           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                           height: 700px;
+                       }
+           
+                       .best-sellers-section h1 {
+                           font-size: 2.5rem;
+                           margin-bottom: 10px;
+                           color: #333;
+                       }
+           
+                       .best-sellers-section h2 {
+                           font-size: 2rem;
+                           margin-bottom: 20px;
+                           color: #666;
+                       }
+           
+                       .best-sellers-container {
+                           display: flex;
+                           flex-wrap: wrap;
+                           gap: 20px;
+                           justify-content: center;
+                       }
+           
+                       .laptop-card {
+                           width: 300px;
+                           border: 1px solid #ccc;
+                           border-radius: 10px;
+                           padding: 20px;
+                           text-align: left;
+                           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                           transition: transform 0.3s ease;
+                       }
+           
+                       .laptop-card:hover {
+                           transform: translateY(-10px);
+                       }
+           
+                       .laptop-card img {
+                           width: 100%;
+                           border-radius: 10px;
+                           margin-bottom: 15px;
+                       }
+           
+                       .laptop-card h3 {
+                           font-size: 1.5rem;
+                           margin-bottom: 10px;
+                           color: #333;
+                       }
+           
+                       .laptop-card p {
+                           font-size: 1rem;
+                           line-height: 1.5;
+                           color: #666;
+                       }
+           
+                       
+           
+                 /* Base Styles */
+           .brand-card h2 {
+               margin: 10px 0 0;
+           }
+           
+           .brand-section {
+               width: 90%;
+               max-width: 1200px;
+               margin: 50px auto; /* Left-right auto to center, 50px top and bottom */
+               text-align: center;
+               margin-top: 100px; /* Increased top margin */
+               scroll-margin-top: 120px;
+
+           }
+           
+           .brand-section h1 {
+               font-size: 2.5rem;
+               margin-bottom: 20px;
+               color: #333;
+               text-decoration: none;
+           }
+           
+           .brand-section p {
+               text-decoration: none;
+           }
+           
+           .brand-container {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 20px;
+               justify-content: center;
+           }
+           
+           .brand-card {
+               width: 300px;
+               border: 1px solid #ccc;
+               border-radius: 10px;
+               padding: 20px;
+               text-align: center;
+               box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               transition: transform 0.3s ease;
+           }
+           
+           .brand-card:hover {
+               transform: translateY(-10px);
+           }
+           
+           .brand-card img {
+               width: 100px;
+               height: auto;
+               margin-bottom: 15px;
+               transition: transform 0.3s ease-in-out;
+           }
+           
+           .brand-card img:hover {
+               transform: scale(1.2);
+           }
+           
+           .brand-card h3 {
+               font-size: 1.5rem;
+               margin-bottom: 10px;
+               color: #333;
+           }
+           
+           .brand-card p {
+               font-size: 1rem;
+               line-height: 1.5;
+               color: #666;
+           }
+           
+           /* Responsive adjustments */
+           @media (max-width: 1024px) {
+               .brand-section h1 {
+                   font-size: 2rem;
+               }
+           
+               .brand-card {
+                   width: 250px;
+               }
+           
+               .brand-card h3 {
+                   font-size: 1.4rem;
+               }
+           
+               .brand-card p {
+                   font-size: 0.95rem;
+               }
+           
+               .brand-section {
+                   margin-top: 600px; /* Increased top margin for medium screens */
+               }
+           }
+           
+           @media (max-width: 768px) {
+               .brand-section {
+                   padding: 20px;
+                   margin-top: 1300px; /* Increased top margin for smaller screens */
+               }
+           
+               .brand-container {
+                   gap: 10px;
+               }
+           
+               .brand-card {
+                   width: 100%;
+                   max-width: 300px;
+               }
+           
+               .brand-card h3 {
+                   font-size: 1.3rem;
+               }
+           
+               .brand-card p {
+                   font-size: 0.9rem;
+               }
+           }
+           
+           @media (max-width: 480px) {
+               .brand-section h1 {
+                   font-size: 1.8rem;
+               }
+           
+               .brand-card {
+                   width: 100%;
+                   padding: 15px;
+               }
+           
+               .brand-card h3 {
+                   font-size: 1.2rem;
+               }
+           
+               .brand-card p {
+                   font-size: 0.85rem;
+               }
+           
+               .brand-card img {
+                   width: 80px;
+               }
+           
+               .brand-section {
+                   margin-top: 1400px; /* Even more margin for very small screens */
+               }
+           }
+           
+           
+                       .footer {
+                               background-color: #f4f4f4;
+                               padding: 20px;
+                               text-align: center;
+                           }
+           
+                       
+                   .social-links {
+                       margin-bottom: 15px;
+                   }
+                   .social-links a {
+                       margin: 0 10px;
+                       color: #333;
+                       text-decoration: none;
+                   }
+                   .contact-section {
+                   width: 100%;
+                   padding: 30px 0;
+                   background-color: #f4f4f4;
+                   display: flex;
+                   justify-content: center;
+                   align-items: center;
+               }
+           
+               .contact-container {
+                   width: 90%;
+                   max-width: 800px;
+                   background-color: white;
+                   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                   border-radius: 10px;
+                   display: flex;
+                   overflow: hidden;
+               }
+           
+               .contact-info {
+                   flex: 1;
+                   background-color: white;
+                   color: black;
+                   padding: 20px;
+                   display: flex;
+                   flex-direction: column;
+                   justify-content: center;
+               }
+           
+               .contact-info h2 {
+                   font-size: 1.5rem;
+                   margin-bottom: 10px;
+               }
+           
+               .contact-info p {
+                   font-size: 0.9rem;
+                   margin-bottom: 10px;
+                   line-height: 1.4;
+               }
+           
+               .contact-details {
+                   margin-bottom: 10px;
+               }
+           
+               .contact-details div {
+                   display: flex;
+                   align-items: center;
+                   margin-bottom: 5px;
+                   font-size: 0.8rem;
+               }
+           
+               .contact-details i {
+                   margin-right: 8px;
+               }
+           
+               .contact-form-section {
+                   flex: 1;
+                   padding: 20px;
+               }
+           
+               .contact-form-section h2 {
+                   font-size: 1.5rem;
+                   margin-bottom: 10px;
+                   color: #333;
+               }
+           
+               .contact-form {
+                   display: flex;
+                   flex-direction: column;
+               }
+           
+               .contact-form input, 
+               .contact-form textarea {
+                   width: 100%;
+                   padding: 8px;
+                   margin-bottom: 10px;
+                   border: 1px solid #ddd;
+                   border-radius: 4px;
+                   font-size: 0.9rem;
+               }
+           
+               .contact-form textarea {
+                   resize: vertical;
+                   min-height: 80px;
+               }
+           
+               .contact-form button {
+                   background-color: #007bff;
+                   color: white;
+                   border: none;
+                   padding: 10px;
+                   border-radius: 4px;
+                   cursor: pointer;
+                   transition: background-color 0.3s ease;
+                   font-size: 0.9rem;
+               }
+           
+               .contact-form button:hover {
+                   background-color: #0056b3;
+               }
+           
+               /* Responsive adjustments */
+               @media (max-width: 600px) {
+                   .contact-container {
+                       flex-direction: column;
+                   }
+               }
+               html {
+    scroll-behavior: smooth;
+}
+           </style>
+           <!-- Header section starts -->
+           <header class="header">
+               <div class="header-container"  id=>
+                   <!-- Logo linking back to the homepage -->
+                   <a href="/BAGO/HOMEPAGE.html" class="logo">
+                       <img src="/BAGO/logo2.png" alt="Logo">
+                   </a>
+           
+                   <!-- Search bar for users to search laptops -->       
+                   <div class="search-container">
+                       <input type="text" class="search-bar" placeholder="Search laptops...">
+                       <button class="search-button">Search</button>
+                   </div>
+                   
+                   <!-- Mobile menu button for responsive design -->       
+                   <div class="mobile-menu-btn">
+                       <span></span>
+                       <span></span>
+                       <span></span>
+                   </div>
+                
+                   <!-- Navigation links -->   
+                   <nav class="nav">
+                       <a href="#home" class="nav-link">HOME</a>
+                       <a href="/FRONTPAGE/about us.html" class="nav-link">ABOUT</a>
+                       <a href="#catalog" class="nav-link">CATALOG</a>
+                       <a href="#contact" class="nav-link">CONTACT</a>
+                      
+                      
+                   </nav>
+               </div>
+           </header>
+           <!-- Header section ends -->
+
+           <!-- Main content -->
+           <div class="main-content" id="home">
+               <div class="gif-container">
+                   <!-- Laptops images -->
+                   <img class="slide" src="/catalog/acer catalog.avif" alt="Image 1">
+                   <img class="slide" src="/catalog/msi catalog.avif" alt="Image 2">
+                   <img class="slide" src="/catalog/dell catalog.avif" alt="Image 3">
+                   <img class="slide" src="/catalog/lenovo catalog.avif" alt="Image 4">
+                   <img class="slide" src="/catalog/hp catalog.avif" alt="Image 5">
+                   <img class="slide" src="/catalog/asus catalog.webp" alt="Image 5">
+                    
+                   <!-- Navigation Buttons -->
+                   <button class="prev-button">&#9664;</button> <!-- Left arrow -->
+                   <button class="next-button">&#9654;</button> <!-- Right arrow -->
+               </div>
+           </div>
+               
+           <!-- Welcome section for introducing the site -->
+           <div class="welcome-section">
+               <div class="text-container">
+                   <h1>Welcome to Techypedia!</h1>
+                   <p>Techypedia is your go-to guide for finding the perfect laptop to suit your needs. Whether you're a student, professional, gamer, or creative, we make it easy to choose the right device.</p>
+                   
+                   <h2>Expert Advice and In-Depth Reviews</h3>
+                   <p>Choosing the right laptop can be overwhelming, but Techypedia provides expert advice, in-depth reviews, and helpful comparisons to help you make an informed decision.</p>
+                   
+                   <h2>Smart, Informed Purchases</h2>
+                   <p>Techypedia ensures you make a smart, informed purchase for work, study, gaming, or creativity. We break down key factors like processor speed, battery life, and screen size, helping you choose the best device for your lifestyle.</p>
+                   
+                   <h2>Tailored to Your Needs</h2>
+                   <p>From performance and features to budget-friendly options, we help you find the laptop that fits your requirements and exceeds your expectations.</p>
+                   
+                   <h2>Explore With Confidence</h2>
+                   <p>Let Techypedia guide you every step of the way, ensuring that your next laptop purchase is the right one.</p>
+               </div>
+              <!-- Button to navigate to the catalog section -->
+              <a href="#catalog"><button class="explore-button">Explore Now</button></a> 
+           </div>
+           
+           <!-- Section showcasing best-selling laptops -->
+           <div class="best-sellers-section">
+               <h1>Discover the Best-Selling Laptops</h1>
+               <h2>Top Picks for Performance and Value</h2>
+               <div class="best-sellers-container">
+                   <!-- Laptop 1 -->
+                   <div class="laptop-card">
+                       <br><br>
+                       <img src="/laptops/aspire5.avif" alt="Laptop 1">
+                       <br><br><br>
+                       <h3>Acer Aspire 5</h3>
+                       <p>Perfect for students and professionals, the Acer Aspire 5 offers excellent performance and portability at an affordable price. With its long battery life and crisp display, it's a top choice for everyday use.</p>
+                   </div>
+           
+                   <!-- Laptop 2 -->
+                   <div class="laptop-card">
+                       <img src="/laptops/ThinkPad X1 Carbon Gen 12.avif" alt="Laptop 2">
+                       <h3>Lenovo ThinkPad X1 Carbon</h3>
+                       <p>The Lenovo ThinkPad X1 Carbon is a business powerhouse, offering a lightweight design, outstanding keyboard, and top-tier performance. It's ideal for professionals who need reliability and speed on the go.</p>
+                   </div>
+           
+                   <!-- Laptop 3 -->
+                   <div class="laptop-card">
+                       <img src="/laptops/zephyrus g14.png" alt="Laptop 3">
+                       <h3>ASUS ROG Zephyrus G14</h3>
+                       <p>A gamer’s dream, the ASUS ROG Zephyrus G14 delivers exceptional graphics, blazing fast performance, and a sleek design. Perfect for gaming enthusiasts on the go.</p>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="brand-section" id="catalog">
+               <h1>Explore Top Laptop Brands</h1>
+               <div class="brand-container">
+                   <!-- Acer -->
+                   <div class="brand-card">
+                       <a href="/BAGO/acer laptop.html">
+                           <img src="/logo/acer logo.png" alt="Acer Logo">
+                       </a>
+                       <h3>Acer</h3>
+                       <p>Acer is known for its affordability and wide range of laptops suitable for students, professionals, and gamers alike.</p>
+                   </div>
+           
+                   <!-- Asus -->
+                   <div class="brand-card">
+                       <a href="/BAGO/asus laptop.html">
+                           <img src="/logo/asus logo.png" alt="Asus Logo">
+                       </a>
+                       <h3>Asus</h3>
+                       <p>Asus offers innovative designs and high-performance laptops, including their popular ROG series for gamers.</p>
+                   </div>
+           
+                   <!-- HP -->
+                   <div class="brand-card">
+                       <a href="/BAGO/hp laptop.html">
+                           <img src="/logo/hp logo.png" alt="HP Logo">
+                       </a>
+                       <h3>HP</h3>
+                       <p>HP combines style and functionality, delivering reliable laptops that excel in both personal and professional settings.</p>
+                   </div>
+           
+                   <!-- Lenovo -->
+                   <div class="brand-card">
+                       <a href="/BAGO/lenovolaptop.html">
+                           <img src="/logo/lenovo logo.webp" alt="Lenovo Logo">
+                       </a>
+                       <h3>Lenovo</h3>
+                       <p>Lenovo is a leader in productivity and business laptops, offering durable builds and impressive performance.</p>
+                   </div>
+           
+                   <!-- MSI -->
+                   <div class="brand-card">
+                       <a href="/BAGO/msi laptop.html">
+                           <img src="/logo/msi logo.png" alt="MSI Logo">
+                       </a>
+                       <h3>MSI</h3>
+                       <p>MSI is synonymous with gaming excellence, providing powerful laptops designed for immersive gaming experiences.</p>
+                   </div>
+           
+                   <!-- Dell -->
+                   <div class="brand-card">
+                       <a href="/BAGO/dell laptop.html">
+                           <img src="/logo/dell logo.png" alt="Dell Logo">
+                       </a>
+                       <h3>Dell</h3>
+                       <p>Dell delivers cutting-edge technology and premium designs, from their XPS line to dependable Inspiron models.</p>
+                   </div>
+               </div>
+           </div>
+           
+           
+           
+           
+           
+           <!-- Footer Section -->        
+           <footer class="footer" id="contact">
+               <div class="social-links">
+                   <a href="#">Facebook</a>
+                   <a href="#">Twitter</a>
+                   <a href="#">LinkedIn</a>
+                   <a href="/FRONTPAGE/ourteam.html">OUR TEAM</a>
+               </div>
+
+               <!-- Contacts Section -->
+               <section class="contact-section">
+                   <div class="contact-container">
+                       <div class="contact-info">
+                           <h2>Contact Techypedia</h2>
+                           <p>Have questions about laptops or need personalized advice? Reach out to our expert team!</p>
+                           
+                           <div class="contact-details">
+                               <div>
+                                   <i>📍</i> 123 Tech Street, Innovation City
+                               </div>
+                               <div>
+                                   <i>📞</i> +63 (912) 345-6789
+                               </div>
+                               <div>
+                                   <i>✉️</i> support@techypedia.com
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <div class="contact-form-section">
+                           <h2>Send Us a Message</h2>
+                           <form class="contact-form" id="contactForm">
+                               <input type="text" name="name" placeholder="Your Name" required>
+                               <input type="email" name="email" placeholder="Your Email" required>
+                               <input type="text" name="subject" placeholder="Subject" required>
+                               <textarea name="message" placeholder="Your Message" required></textarea>
+                               <button type="submit">Send Message</button>
+                           </form>
+                       </div>
+                   </div>
+               </section>
+           
+               <p>&copy; 2024 Techypedia. All rights reserved.</p>
+           </footer>
+               
+           <script>
+           document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+               this.classList.toggle('active');
+               document.querySelector('.nav').classList.toggle('active');
+           });
+           
+           // Close mobile menu when clicking a link
+           document.querySelectorAll('.nav-link').forEach(link => {
+               link.addEventListener('click', () => {
+                   document.querySelector('.nav').classList.remove('active');
+                   document.querySelector('.mobile-menu-btn').classList.remove('active');
+               });
+           });
+           
+           // Close mobile menu when clicking outside
+           document.addEventListener('click', (e) => {
+               if (!e.target.closest('.header-container')) {
+                   document.querySelector('.nav').classList.remove('active');
+                   document.querySelector('.mobile-menu-btn').classList.remove('active');
+               }
+           });
+           
+           const slides = document.querySelectorAll('.slide');
+                           const nextButton = document.querySelector('.next-button');
+                           const prevButton = document.querySelector('.prev-button');
+                           const hamburger = document.querySelector('.hamburger');
+                           const nav = document.querySelector('.nav');
+                           let currentSlide = 0;    
+           
+                           // Show the first slide
+                           slides[currentSlide].classList.add('active');
+                           
+                           function showSlide(index) {
+                               slides.forEach((slide, i) => {
+                                   slide.classList.remove('active');
+                                   if (i === index) {
+                                       slide.classList.add('active');
+                                   }
+                               });
+                           }
+           
+                           nextButton.addEventListener('click', () => {
+                               currentSlide = (currentSlide + 1) % slides.length; // Loop back to the first slide
+                               showSlide(currentSlide);
+                           });
+           
+                           prevButton.addEventListener('click', () => {
+                               currentSlide = (currentSlide - 1 + slides.length) % slides.length; // Loop back to the last slide
+                               showSlide(currentSlide);
+                           });
+           </script>
+        </body>
+        </html>
